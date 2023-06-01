@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Blood Donor Database</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<h1>Blood Donor Database</h1>
+<h2>Search for Blood Donors</h2>
+<form action="search.php">
+<input type="text" name="name" placeholder="Name">
+<input type="submit" value="Search">
+</form>
+<h2>View Donor Information</h2>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Contact Information</th>
+<th>Blood Type</th>
+<th>Last Donation Date</th>
+</tr>
+</thead>
+<tbody>
+<?php
+// Connect to the database
+$db = new PDO('mysql:host=localhost;dbname=blood_donors', 'root', '');
+
+// Get the list of donors
+$sql = 'SELECT * FROM blood_donors';
+$results = $db->query($sql);
+
+// Loop through the results and display the donor information
+foreach ($results as $row) {
+?>
+<tr>
+<td><?php echo $row['name']; ?></td>
+<td><?php echo $row['contact_information']; ?></td>
+<td><?php echo $row['blood_type']; ?></td>
+<td><?php echo $row['last_donation_date']; ?></td>
+</tr>
+<?php
+}
+?>
+</tbody>
+</table>
+<h2>Make a Donation</h2>
+<form action="donate.php">
+<input type="text" name="name" placeholder="Name">
+<input type="text" name="contact_information" placeholder="Contact Information">
+<input type="text" name="blood_type" placeholder="Blood Type">
+<input type="submit" value="Donate">
+</form>
+</body>
+</html>
